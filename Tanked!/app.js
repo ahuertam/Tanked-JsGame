@@ -11,7 +11,8 @@ Game.prototype.generateWall=function(){
 
 };
 Game.prototype.drawWall=function(){
-
+  this.rows    = options.rows;
+  this.columns = options.columns;
 };
 
 //////////////

@@ -14,3 +14,41 @@
   height: 16px;
   width: 16px;
 }
+
+#map{
+  height: 450px;
+  margin-left: 20%;
+  width: 800px;
+  background-color: #000011;
+  border:1px  solid #CCC;
+  border-left: none;
+  border-right: none;
+  position: relative;
+}
+#player1{
+background-image:url("img/Tank1.gif");
+width: 80px;
+height: 100px;
+
+}
+#player2{
+  background-image:url("img/Tank2.gif");
+  width: 80px;
+  height: 100px;
+}
+#bullet1{
+  background-image:url("img/Bullet1.gif");
+  width: 20px;
+  height: 20px;
+}
+#bullet2{
+  background-image:url("img/Bullet2.gif");
+  width: 20px;
+  height: 20px;
+}
+.wall{
+  background-image:url("img/wall1.gif");
+  width: 20px;
+  height: 10px;
+
+}
