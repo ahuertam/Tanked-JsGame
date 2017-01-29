@@ -1,3 +1,7 @@
+/*******************************************
+TANKS
+*******************************************/
+
 function Tank(options){
 this.direction = "right";
 this.lifes=3;

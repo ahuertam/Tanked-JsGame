@@ -4,7 +4,7 @@ function Game(options){
 Game.prototype.drawTank1=function(){
 
 };
-Game.prototype.drawTank1=function(){
+Game.prototype.drawTank2=function(){
 
 };
 Game.prototype.generateWall=function(){
