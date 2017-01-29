@@ -1,3 +1,6 @@
+
+<p>Enlace a Pages del proyecto<li>https://ahuertam.github.io/IHProyect1/index.html</li></p>
+
 <h1>IRONHACK WEEK 3 PROYECT</h1>
 <p>The project is called Tanked! . Its a 2 player game on a fixed layout
 where both players are a tank that can move up,dow,left and right and shoot bullets from their cannons.</p>
@@ -25,7 +28,7 @@ where both players are a tank that can move up,dow,left and right and shoot bull
 <p>On the first Iteration the map will just be an array in which the Tanks should Move around,there will be no Boundarys ( as a round planet) </p>
 <p>***************************************************</p>
 <h2>LOGIC PART Second Iteration</h2>
-<h3> In the Second iteration Object Walls should be added, destruction of elements ( BUllet and Tanks should be added), also a limit of bullets fired by the tanks  that should wait a given timer to be able to fire again, also powerup item defined/h3>
+<h3> In the Second iteration Object Walls should be added, destruction of elements ( BUllet and Tanks should be added), also a limit of bullets fired by the tanks  that should wait a given timer to be able to fire again, also powerup item defined</h3>
 <h2>TANK PLAYER CONSTRUCTOR<h2>
 <p>We will  add:
   <ul>
