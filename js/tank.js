@@ -6,7 +6,8 @@ function Tank(options){
   this.direction = "right";
   this.lifes=3;
   this.position=[
-    {row:5,column:5}
+    {row:10,column:4}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
+    {row:6,column:6}
   ];
 
   }
@@ -112,8 +113,10 @@ Tank.prototype.stopTank=function(){//Stops the tank
 Tank.prototype.pressFire=function(){
 //Generate a new bullet with the direction of the tank
 console.log("FIRING A BULLET direction: "+this.direction);
-var bullet =new Bullet(this);
-bullet.moveForward(this.direction);
+var tank_position = JSON.parse(JSON.stringify(this.position));//THIS ELIMINATES THE OBJECT REFERENCE
+console.log('this position',this.position);
+var bullet =new Bullet(tank_position,this.direction);
+bullet.moveForward();
 };
 Tank.prototype.collidesWith=function(){
 
@@ -127,5 +130,5 @@ Tank.prototype.getsPowerUp=function(){
 ////////////////////////////////////////////////
 ///////////////SANDBOX PART/////////////////////
 //////////////////////////////////////
-tank =new Tank();
-tank2=new Tank();
+//tank =new Tank();
+//tank2=new Tank();

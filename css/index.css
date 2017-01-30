@@ -1,13 +1,12 @@
 .container {
-  /*height: 40%;
-  margin: 40% auto;
-  width: 405;*/
+  height: 450px;
+  margin: 30px auto;
+  width: 700px;
+  border:1px solid black;
+  background-color: #b39980;
 }
 .cell{
-  /*border-color: black;
-  border:1px;
-  border-width: thin;
-  border-style:dotted;
+  border:1px solid black;
   background-size: contain;
   box-sizing: border-box;
   float: left;
@@ -15,31 +14,28 @@
   width: 16px;*/
 }
 
-#map{
-  margin-top: 1%;
-  height: 600px;
-  margin-left: 5%;
-  width: 900px;
-  background-color: #000011;
-  border:1px  solid #CCC;
-  border-left: none;
-  border-right: none;
-  position: relative;
+.map{
+
 }
-#player1{
-background-image:url("../img/Tank1.gif");
-top:4%;
-width: 80px;
-height: 100px;
+.player1{
+  /* This is with the image
+background-image:url("../img/Tank1Small.gif");
+width: 40px;
+height: 50px;
+*/
+width: 40px;
+height: 40px;
+border: 3px solid #555;
+ background-color: #95BE69;
 position: absolute;
 
 }
-#player2{
-  background-image:url("../img/Tank2.gif");
+.player2{
+  background-image:url("../img/Tank2Small.gif");
   top:4%;
   right:19%;
-  width: 80px;
-  height: 100px;
+  width: 40px;
+  height: 50px;
   position: absolute;
 }
 #bullet1{
