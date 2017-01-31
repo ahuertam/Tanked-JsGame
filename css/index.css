@@ -66,16 +66,16 @@ width: 35px;
 height: 40px;
 }
 
-.player1-right{
+.right{
   transform:rotate(90deg);
 }
-.player1-up{
+.up{
 transform:rotate(360deg);
 }
-.player1-down{
+.down{
   transform:rotate(180deg);
 }
-.player1-left{
+.left{
   transform:rotate(-90deg);
 }
 
@@ -85,11 +85,12 @@ transform:rotate(360deg);
   height: 40px;
 }
 .bullet1{
-  background-image:url("../img/Bullet1.gif");
+  background-image:url("../img/Bullet7.gif");
   width: 35px;
   height: 40px;
 
 }
+
 .wall{
   left: 30%;
   top:20%;

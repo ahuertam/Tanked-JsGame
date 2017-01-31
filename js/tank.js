@@ -110,13 +110,15 @@ Tank.prototype.stopTank=function(){//Stops the tank
 
 };
 
-Tank.prototype.pressFire=function(){
-//Generate a new bullet with the direction of the tank
-console.log("FIRING A BULLET direction: "+this.direction);
-var tank_position = JSON.parse(JSON.stringify(this.position));//THIS ELIMINATES THE OBJECT REFERENCE
-console.log('this position',this.position);
-var bullet =new Bullet(tank_position,this.direction);
-bullet.moveForward();
+Tank.prototype.pressFire=function(direction){
+  //Generate a new bullet with the direction of the tank
+  console.log("FIRING A BULLET direction: "+direction);
+  var tank_position = JSON.parse(JSON.stringify(this.position));//THIS ELIMINATES THE OBJECT REFERENCE
+  console.log('this position',this.position);
+  var bullet =new Bullet(tank_position,direction);
+  //setTimeout(function () {bullet.moveForward();},1000);
+  bullet.moveForward();
+  return(bullet);
 };
 Tank.prototype.collidesWith=function(){
 
