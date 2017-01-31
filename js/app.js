@@ -42,7 +42,7 @@ Game.prototype.drawTank2=function(){
   var player2Pos = '[data-row=' + this.tank.position[1].row + '][data-col=' + this.tank.position[1].column + ']';
   $(player2Pos).addClass('player2');
 };
-Game.prototype.generateWall=function(size,row,column,direction){
+Game.prototype.generateWall=function(size,row,column,direction,wallType){
   this.size=size;
   this.row=row;
   this.column=column;
@@ -50,7 +50,7 @@ Game.prototype.generateWall=function(size,row,column,direction){
   while(size>0){
     console.log(row,column,size);
   var wallLong = '[data-row=' + row+ '][data-col=' + column+ ']';
-  $(wallLong).addClass('wall');
+  $(wallLong).addClass(wallType);
     switch (direction) {
       case 'left':
         row++;
@@ -82,14 +82,18 @@ Game.prototype.aleatoryWord=function(){
 Game.prototype.drawWall=function(){
   //Evitar los puntos del SPAWN de los tankes
   //EVITAR ROW 0
-  //console.log(this.aleatoryWord());
-  //console.log(this.aleatoryNumber(4,20));
-  //this.generateWall(4,2,2,"left");
   var i=0;
   while(i<5){
-  this.generateWall(this.aleatoryNumber(4,6),this.aleatoryNumber(2,10),this.aleatoryNumber(1,13),this.aleatoryWord());
-  this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(3,10),this.aleatoryNumber(1,7),this.aleatoryWord());
-  this.generateWall(this.aleatoryNumber(4,9),this.aleatoryNumber(7,14),this.aleatoryNumber(4,14),this.aleatoryWord());
+    //Normal Wals
+  this.generateWall(this.aleatoryNumber(2,6),this.aleatoryNumber(1,20),this.aleatoryNumber(1,23),this.aleatoryWord(),"wall");
+  this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(1,20),this.aleatoryNumber(1,21),this.aleatoryWord(),"wall");
+  //this.generateWall(this.aleatoryNumber(2,4),this.aleatoryNumber(7,14),this.aleatoryNumber(4,14),this.aleatoryWord(),"wall");
+  //bush
+  this.generateWall(this.aleatoryNumber(0,1),this.aleatoryNumber(1,14),this.aleatoryNumber(4,23),this.aleatoryWord(),"bush");
+  this.generateWall(this.aleatoryNumber(0,1),this.aleatoryNumber(1,14),this.aleatoryNumber(4,23),this.aleatoryWord(),"bush");
+  //BreakableWALS wallBreak
+  this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(3,10),this.aleatoryNumber(1,7),this.aleatoryWord(),"wallBreak");
+
         i++;}
 };
 
@@ -272,7 +276,8 @@ Game.prototype.controlsTank1=function(){
         }
         break;
       case 32: // spacebar
-
+          var audio = new Audio('./sounds/gunshot1.mp3');
+          audio.play();
           switch (this.tank.direction) {
             case "left":
               var bulletLeft=this.tank.pressFire(this.tank.direction);

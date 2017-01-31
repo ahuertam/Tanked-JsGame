@@ -9,39 +9,41 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>TANKED!</title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   </head>
+  <header>
+        <h1 id="title"> TANKED!</h1>
+  </header>
   <body>
-    <h1> TANKED!</h1>
-    <div class="playerLeft">
-        PLAYER 1
-        <br>
-        LIVES: XXX
-        <br>
-        POINTS: O
-      <img src="img/Tank1.gif" alt="">
-      <br>
-        <br>
-      Controls: UP/DOWN/LEFT/RIGHT
-      <br>
-      Fire:SPACEBAR
-    </div>
 
-    <div class="container"></div>
+    <div class="playerLeft">
+      <p>
+        <h4>PLAYER 1</h4>
+        <h4>LIVES:<h4>XXX</h4></h4>
+        <h4>POINTS: <h4>0</h4></h4>
+        <h4>Controls:</h4><h4>UP/DOWN/LEFT/RIGHT</h4>
+        <h4>Fire:SPACEBAR</h4>
+    </p>
+    </div>
+    <div class="board">
+      <div class="container"></div>
+    </div>
     <script src="js/bullet.js"></script>
     <script src="js/tank.js"></script>
     <script src="js/app.js"></script>
     <div class="playerRight">
-      PLAYER 2
-      <br>
-      LIVES: XXX
-      <br>
-      POINTS: O
-      <img src="img/Tank2.gif" alt="">
-      <br>
-      Controls: W/S/A/D
-      <br>
-      Fire:CTRL
+      <p>
+        <h4>PLAYER 2</h4>
+        <h4>LIVES:<h4>XXX</h4></h4>
+        <h4>POINTS: <h4>0</h4></h4>
+        <h4>Controls:</h4><h4>W/S/A/D</h4>
+        <h4>Fire:CTRL</h4>
+      </p>
     </div>
-    <button type="button" name="button">START</button>
+    <img id="tLeft" src="img/Tank1.gif" alt="">
+    <img id="tRight"src="img/Tank2.gif" alt="">
+    <button class="btn" type="button" name="button"><a href="#">RESTART</a></button>
+    <button class="btn" type="button" name="button">HELP!</button>
+    <button class="btn" type="button" name="button">OPTIONS</button>
   </body>
   </html>

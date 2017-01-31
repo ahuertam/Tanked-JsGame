@@ -1,35 +1,87 @@
 body{
-  background-color: #b39980;;
-  color: white;
+  font-family: 'Press Start 2P', cursive;
+  background-image:url("../img/bgtile.gif");
+  background-color:#696969;
+
+  color: blue;
 }
 h1{
+  font-size: 222%;
+  text-shadow: 1px 1px red;
+  font-family: 'Press Start 2P', cursive;
   text-align: center;
+}
+#title{
+  margin-top: 4px;
+  background-color: black;
+}
+.btn{
+  background-color: black;
+  color:white;
+  font-family: 'Press Start 2P', cursive;
+  border:1px solid black;
+  padding: 1%;
+  margin-top: 1%;
+  margin-left: 2%;
+}
+.btn a{
+  text-decoration:none;
+}
+.btn:hover{
+  color:black;
+  background-image:url("../img/bgtile.gif");
+  background-repeat:round;
+  font-family: 'Press Start 2P', cursive;
+  border:1px solid black;
+  padding: 1%;
+  margin-top: 1%;
+  margin-left: 2%;
 }
 
 .playerLeft{
-  border:1px solid black;
+  /*border:1px solid black;*/
+  color:blue;
   position: absolute;
   float:left;
-  padding: 5%;
-  margin-top:0.8%;
-  margin-left: 2%;
+  background-color: black;
+  font-size: 14px;
+  margin-top: 1%;
+  padding-left: 1%;
+  padding-right: 2%
+
 
 }
-.playerLeft img{
-  margin-left: 2%;
+#tLeft {
+  margin-left: -72%;
+  margin-top: -14%;
   transform: rotate(90deg);
   float: left;
-
+  position: absolute;
+}
+#tRight {
+  margin-top: -14%;
+  margin-left: 2%;
+  margin-left: 9%;
+  transform: rotate(-90deg);
+  float: left;
+  position: absolute;
 }
 
 .playerRight{
-  border:1px solid black;
+  /*border:1px solid black; */
+  font-size: 14px;
+  color: red;
   position: absolute;
-  float:right;
-  padding: 5%;
-  margin-top:-37.5%;
-  margin-left: 78.5%;
-  margin-right: 2%;
+  float: left;
+  padding-bottom: 0.5%;
+  padding-right: 11.5%;
+  margin-top:-36.5%;
+  margin-left: 77.5%;
+  background-color: black;
+}
+.playerRight h4{
+  margin-left: 4%;
+
 }
 
 .playerRight img{
@@ -38,7 +90,12 @@ h1{
   transform: rotate(270deg);
 
 }
-
+.board{
+height: 450px;
+width: 700px;
+margin: 30px auto;
+background-color: black;
+}
 .container {
   height: 450px;
   margin: 30px auto;
@@ -46,6 +103,7 @@ h1{
   border:1px solid black;
 
 }
+
 .cell{
   border:1px solid black;
   background-size: contain;
@@ -95,6 +153,15 @@ transform:rotate(360deg);
   background-image:url("../img/wall1.gif");
   width: 35px;
   height: 40px;
+}
 
-
+.bush{
+  background-image:url("../img/15.gif");
+  width: 35px;
+  height: 40px;
+}
+.wallBreak{
+  background-image:url("../img/wall2.jpeg");
+  width: 35px;
+  height: 40px;
 }
