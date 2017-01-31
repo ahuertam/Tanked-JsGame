@@ -2,11 +2,11 @@
 TANKS
 *******************************************/
 
-function Tank(options){
-  this.direction = "right";
+function Tank(){
+  this.direction = "up";
   this.lifes=3;
   this.position=[
-    {row:10,column:4}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
+    {row:0,column:1}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
     {row:6,column:6}
   ];
 
@@ -57,41 +57,41 @@ Tank.prototype.turnRight=function(){
       break;
   }
 };
-Tank.prototype.moveForward=function(){
-  var initialPos=this.position[0];
-  if (tank.canAdvance){
+Tank.prototype.moveForward=function(i){
+  var initialPos=this.position[i];
+  if (this.canAdvance()){
     switch (this.direction) {
       case "up"://Move upper Row
-        console.log("Going UP ");
-          initialPos.row +=1;
+        console.log("moveForward UP ");
+          initialPos.row -=1;
         break;
       case "down"://move down Row
-        console.log("Going down ");
-        initialPos.row -=1;
+        console.log("moveForward down ");
+        initialPos.row +=1;
         break;
       case "left":
-        console.log("Going Left ");//move less column
+        console.log("moveForward Left ");//move less column
         initialPos.column -=1;
         break;
       case "right":
-        console.log("Going Right ");//move right  column
+        console.log("moveForward Right ");//move right  column
         initialPos.column +=1;
         break;
     }
   }else{console.log("Cant move Forward");}
   console.log(initialPos.row+" "+initialPos.column);
 };
-Tank.prototype.moveBack=function(){
-  var initialPos=this.position[0];
-  if (tank.canGoBack){
+Tank.prototype.moveBack=function(i){
+  var initialPos=this.position[i];
+  if (this.canGoBack()){
     switch (this.direction) {
       case "up"://Move upper Row
         console.log("Going BackWards while facing up ");
-          initialPos.row -=1;
+          initialPos.row +=1;
         break;
       case "down"://move down Row
         console.log("Going BackWards while facing down ");
-        initialPos.row +=1;
+        initialPos.row -=1;
         break;
       case "left":
         console.log("Going BackWards while facing  Left ");//move less column

@@ -1,58 +1,94 @@
+body{
+  background-color: #b39980;;
+  color: white;
+}
+h1{
+  text-align: center;
+}
+
+.playerLeft{
+  border:1px solid black;
+  position: absolute;
+  float:left;
+  padding: 5%;
+  margin-top:0.8%;
+  margin-left: 2%;
+
+}
+.playerLeft img{
+  margin-left: 2%;
+  transform: rotate(90deg);
+  float: left;
+
+}
+
+.playerRight{
+  border:1px solid black;
+  position: absolute;
+  float:right;
+  padding: 5%;
+  margin-top:-37.5%;
+  margin-left: 78.5%;
+  margin-right: 2%;
+}
+
+.playerRight img{
+  margin-left: 2%;
+  float: left;
+  transform: rotate(270deg);
+
+}
+
 .container {
   height: 450px;
   margin: 30px auto;
   width: 700px;
   border:1px solid black;
-  background-color: #b39980;
+
 }
 .cell{
   border:1px solid black;
   background-size: contain;
   box-sizing: border-box;
   float: left;
-  height: 16px;
-  width: 16px;*/
+  height: 40px;
+  width: 35px;
 }
 
 .map{
-
+  background-color: black;
 }
+
 .player1{
-  /* This is with the image
 background-image:url("../img/Tank1Small.gif");
-width: 40px;
-height: 50px;
-*/
-width: 40px;
+overflow: hidden;
+width: 35px;
 height: 40px;
-border: 3px solid #555;
- background-color: #95BE69;
-position: absolute;
-
 }
+
+.player1-right{
+  transform:rotate(90deg);
+}
+.player1-up{
+transform:rotate(360deg);
+}
+.player1-down{
+  transform:rotate(180deg);
+}
+.player1-left{
+  transform:rotate(-90deg);
+}
+
 .player2{
   background-image:url("../img/Tank2Small.gif");
-  top:4%;
-  right:19%;
-  width: 40px;
-  height: 50px;
-  position: absolute;
+  width: 35px;
+  height: 40px;
 }
-#bullet1{
+.bullet1{
   background-image:url("../img/Bullet1.gif");
-  top:3%;
-  left:14%;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-}
-#bullet2{
-  top:3%;
-  left: 20%;
-  background-image:url("../img/Bullet2.gif");
-  width: 20px;
-  height: 20px;
-  position: absolute;
+  width: 35px;
+  height: 40px;
+
 }
 .wall{
   left: 30%;
@@ -60,6 +96,6 @@ position: absolute;
   background-image:url("../img/wall1.gif");
   width: 20px;
   height: 10px;
-  position: absolute;
+
 
 }
