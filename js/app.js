@@ -3,7 +3,7 @@
 
 function Game(obj){
   this.tank= obj.tank;
-  this.rows    = obj.rows;
+  this.rows = obj.rows;
   this.columns = obj.columns;
   function gridBackground(){
       for (var rowIndex = 0; rowIndex < obj.rows; rowIndex++){
@@ -23,7 +23,7 @@ function Game(obj){
   this.update();
   this.controlsTank1();
   this.controlsTank2();
-
+  this.drawWall();
   //////
   console.log(this.tank);
   ///
@@ -42,10 +42,55 @@ Game.prototype.drawTank2=function(){
   var player2Pos = '[data-row=' + this.tank.position[1].row + '][data-col=' + this.tank.position[1].column + ']';
   $(player2Pos).addClass('player2');
 };
-Game.prototype.generateWall=function(size){
-this.size=size;
+Game.prototype.generateWall=function(size,row,column,direction){
+  this.size=size;
+  this.row=row;
+  this.column=column;
+  this.direction=direction;
+  while(size>0){
+    console.log(row,column,size);
+  var wallLong = '[data-row=' + row+ '][data-col=' + column+ ']';
+  $(wallLong).addClass('wall');
+    switch (direction) {
+      case 'left':
+        row++;
+        break;
+      case 'right':
+        row++;
+        break;
+      case 'up':
+        column--;
+        break;
+      case 'down':
+        column++;
+        break;
+      default:
+        console.log("WALLE WHAT???");
+    }
+  size--;
+ }
 };
+Game.prototype.aleatoryNumber=function(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+Game.prototype.aleatoryWord=function(){
+    var options=["left","right","up","down"];
+      var randomize=Math.round(Math.random()*3);
+      return options[randomize];
+};
+
 Game.prototype.drawWall=function(){
+  //Evitar los puntos del SPAWN de los tankes
+  //EVITAR ROW 0
+  //console.log(this.aleatoryWord());
+  //console.log(this.aleatoryNumber(4,20));
+  //this.generateWall(4,2,2,"left");
+  var i=0;
+  while(i<5){
+  this.generateWall(this.aleatoryNumber(4,6),this.aleatoryNumber(2,10),this.aleatoryNumber(1,13),this.aleatoryWord());
+  this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(3,10),this.aleatoryNumber(1,7),this.aleatoryWord());
+  this.generateWall(this.aleatoryNumber(4,9),this.aleatoryNumber(7,14),this.aleatoryNumber(4,14),this.aleatoryWord());
+        i++;}
 };
 
 

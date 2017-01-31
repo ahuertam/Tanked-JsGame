@@ -7,7 +7,7 @@ function Tank(){
   this.lifes=3;
   this.position=[
     {row:0,column:1}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
-    {row:6,column:6}
+    {row:0,column:18}
   ];
 
   }

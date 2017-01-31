@@ -92,11 +92,9 @@ transform:rotate(360deg);
 }
 
 .wall{
-  left: 30%;
-  top:20%;
   background-image:url("../img/wall1.gif");
-  width: 20px;
-  height: 10px;
+  width: 35px;
+  height: 40px;
 
 
 }
