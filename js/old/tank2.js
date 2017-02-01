@@ -1,6 +1,7 @@
+
 /////////////////////////////////////////CONSTRUCTORS
 
-function Game(obj){
+function Game2(obj){
   this.tank= obj.tank;
   this.tank2= obj.tank2;
   this.rows = obj.rows;
@@ -24,7 +25,6 @@ function Game(obj){
   this.controlsTank1();
   this.controlsTank2();
   this.drawWall();
-  this.paintLives();
   //////
   console.log(this.tank);
   ///
@@ -35,6 +35,7 @@ function Game(obj){
 ////////////////////////////////////////
 Game.prototype.paintLives=function(tank){
 document.getElementById("lifes1").innerHTML =this.tank.lifes;
+
 };
 Game.prototype.drawTank1=function(){
     var player1Pos = '[data-row=' + this.tank.position[0].row + '][data-col=' + this.tank.position[0].column + ']';
@@ -93,6 +94,12 @@ Game.prototype.drawWall=function(){
   this.generateWall(21,0,0,"right","wall");//boundary left
   this.generateWall(16,0,19,"right","wall");//boundary right
   this.generateWall(21,13,0,"down","wall");//boundary down
+
+      //KEEP THIS PUTS WALLS AROUND THE border
+  // this.generateWall(22,0,20,"up","wall");//boundary up
+  // this.generateWall(21,0,0,"right","wall");//boundary left
+  // this.generateWall(16,0,19,"right","wall");//boundary right
+  // this.generateWall(21,13,0,"down","wall");//boundary down
 
   ////CREADOR DE ELEMENTOS
   var i=0;
@@ -177,6 +184,67 @@ Game.prototype.drawBulletT1=function(bullet){
 
 };
 
+Game.prototype.drawBulletT2=function(bullet){
+    console.log(bullet.range);
+    var game = this;
+    function moveBullet() {
+      var Bullet1player2Pos = '[data-row=' + bullet.position[1].row+ '][data-col=' + bullet.position[1].column + ']';
+      game.clearBullets(Bullet1player2Pos); //1/2 DO NOT CHANGE ORDER
+      bullet.moveForward();//2/2
+      Bullet1player2Pos = '[data-row=' + bullet.position[1].row+ '][data-col=' + bullet.position[1].column + ']';
+      $(Bullet1player2Pos).addClass('bullet2');
+      }
+    var interval = setInterval(function () {
+      if (bullet.range > 0) {
+////////////////IMPACT  WALL////////////////////////
+        if (game.checkNextFwd(bullet.direction,bullet.position[1],"wall")){
+          console.log("obstacle AHEAD");
+          Bullet1player2Pos = '[data-row=' + bullet.position[1].row+ '][data-col=' + bullet.position[1].column + ']';
+          game.soundPlayer("biggun1");
+          game.clearBullets(Bullet1player2Pos);
+          clearInterval(interval);
+        }
+////////////////IMPACT Breakble WALL////////////////////////
+          else if (game.checkNextFwd(bullet.direction,bullet.position[1],"wallBreak")) {
+            console.log("Break the DAMN Wall");
+            Bullet1player2Pos = '[data-row=' + bullet.position[1].row+ '][data-col=' + bullet.position[1].column + ']';
+            game.killFwd(bullet.position[1],bullet.direction,"wallBreak");
+            game.soundPlayer("lightExplosion");
+            game.clearBullets(Bullet1player2Pos);
+            game.tank.getSomePoints(100);
+            clearInterval(interval);
+          }
+////////////////IMPACTA CONTRA JUGADOR 1////////////////////////
+          else if (game.checkNextFwd(bullet.direction,bullet.position[1],"player1")) {
+            console.log("DIE YOU BLUE MUDWATER!");
+            Bullet1player2Pos = '[data-row=' + bullet.position[1].row+ '][data-col=' + bullet.position[1].column + ']';
+            //LLAMAR A FUNCION QUE RESTA VIDA, EN CASO QUE NO TENGA VIDAS ACABA LA PARTIDA
+            //If result = True inicia muerte // Else Continua
+            game.clearBullets(Bullet1player2Pos);
+            if(game.tank1.recieveShoot()){////////END GAME HERE
+              game.tank.getSomePoints(1500);
+              game.soundPlayer("bigExplosion");
+              game.killFwd(bullet.position[1],bullet.direction,"player1");
+              alert("RED PLAYER 1 WINS!! LONG LIVE THE RED`S" + "LIFES LEFT :"+game.tank2.lifes+" That gives Some points too man!, in total you have got :"+game.tank2.points);
+              clearInterval(interval);
+            }else{
+              game.soundPlayer("lightExplosion");
+              game.tank.getSomePoints(500);
+              clearInterval(interval);}
+          }
+        else{
+        moveBullet();
+        bullet.range--;}
+      } else {
+        Bullet1player2Pos = '[data-row=' + bullet.position[1].row+ '][data-col=' + bullet.position[1].column + ']';
+        game.clearBullets(Bullet1player2Pos);
+        clearInterval(interval);
+      }
+    }, 100  );
+
+};
+
+
 
 Game.prototype.drawDotBlue=function(){
     // var player1Pos = '[data-row=' + this.tank.position[0].row + '][data-col=' + this.tank.position[0].column + ']';
@@ -211,6 +279,13 @@ Game.prototype.clearTank1Global=function(){
   $('.player1').removeClass('down');
   $('.player1').removeClass('up');
   $('.player1').removeClass('player1');
+};
+Game.prototype.clearTank1Global=function(){
+  $('.player2').removeClass('left');
+  $('.player2').removeClass('right');
+  $('.player2').removeClass('down');
+  $('.player2').removeClass('up');
+  $('.player2').removeClass('player2');
 };
 
 Game.prototype.clearTank2=function(){
@@ -594,6 +669,25 @@ Game.prototype.controlsTank2=function(){
 
 };
 //////////////////////////////////////////////////////////////////
+////////////////GAME FUNCTIONS///////////////////////
+/////////////////////////////////////////////
+Game.prototype.start=function(){
+  //this.update();
+   setInterval(this.update.bind(this), 100);
+
+};
+Game.prototype.update=function(){
+  //this.clearTank1();
+  //this.clearTank2();
+  //console.log("Drawing it again");
+  this.scoreUpdate();
+  //this.drawTank2();
+  //this.scoreUpdate();
+};
+Game.prototype.stop=function(){
+
+};////////
+//////////////////////////////////////////////////////////////////
 ////////////////SCORE MANAGER///////////////////////
 /////////////////////////////////////////
 Game.prototype.scoreUpdate=function(){
@@ -603,23 +697,6 @@ document.getElementById("points1").innerHTML =this.tank.points;
 
 };////////
 
-//////////////////////////////////////////////////////////////////
-////////////////GAME FUNCTIONS///////////////////////
-/////////////////////////////////////////////
-Game.prototype.start=function(){
-  //this.update();
-   setInterval(this.update.bind(this), 100);
-};
-Game.prototype.update=function(){
-  //this.clearTank1();
-  //this.clearTank2();
-  //console.log("Drawing it again");
-  this.scoreUpdate();
-  //this.drawTank2();
-};
-Game.prototype.stop=function(){
-
-};////////
 
 //////////////////////////////////////////////////////////////////
 ////////////////SOUND PLAYER SELECTOR///////////////////////
@@ -649,9 +726,8 @@ Game.prototype.soundPlayer=function(type){
 //////////////////////////////////////////////////////////////////
 ////////////////OBJECTS///////////////////////
 //////////////////////////////////////
-var game =new Game({
+var game2 =new Game({
   rows: 14,
   columns: 20,
 tank:new Tank(),
-tank2:new Tank()
 });

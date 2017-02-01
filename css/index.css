@@ -148,7 +148,12 @@ transform:rotate(360deg);
   height: 40px;
 
 }
+.bullet2{
+  background-image:url("../img/Bullet2.gif");
+  width: 35px;
+  height: 40px;
 
+}
 .dotBlue{
   background-image:url("../img/bluedot2.gif");
   width: 35px;
