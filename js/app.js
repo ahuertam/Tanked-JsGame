@@ -71,7 +71,7 @@ Game.prototype.generateWall=function(size,row,column,direction,wallType){
  }
 };
 Game.prototype.aleatoryNumber=function(min, max){
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 2)) + min;
 };
 Game.prototype.aleatoryWord=function(){
     var options=["left","right","up","down"];
@@ -81,45 +81,96 @@ Game.prototype.aleatoryWord=function(){
 
 Game.prototype.drawWall=function(){
   //Evitar los puntos del SPAWN de los tankes
-  //EVITAR ROW 0
+  //EVITAR ROW 0,1
+  //generateWall=function(size,row,column,direction,wallType)
+  //BOUNDARY WALLS:
+
+  this.generateWall(22,0,20,"up","wall");//boundary up
+  this.generateWall(21,0,0,"right","wall");//boundary left
+  this.generateWall(16,0,19,"right","wall");//boundary right
+  this.generateWall(21,13,0,"down","wall");//boundary down
+
+  ////CREADOR DE ELEMENTOS
   var i=0;
   while(i<5){
     //Normal Wals
   this.generateWall(this.aleatoryNumber(2,6),this.aleatoryNumber(1,20),this.aleatoryNumber(1,23),this.aleatoryWord(),"wall");
   this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(1,20),this.aleatoryNumber(1,21),this.aleatoryWord(),"wall");
   //this.generateWall(this.aleatoryNumber(2,4),this.aleatoryNumber(7,14),this.aleatoryNumber(4,14),this.aleatoryWord(),"wall");
+
   //bush
   this.generateWall(this.aleatoryNumber(0,1),this.aleatoryNumber(1,14),this.aleatoryNumber(4,23),this.aleatoryWord(),"bush");
   this.generateWall(this.aleatoryNumber(0,1),this.aleatoryNumber(1,14),this.aleatoryNumber(4,23),this.aleatoryWord(),"bush");
-  //BreakableWALS wallBreak
-  this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(3,10),this.aleatoryNumber(1,7),this.aleatoryWord(),"wallBreak");
 
+  //BreakableWALS wallBreak
+  this.generateWall(this.aleatoryNumber(4,7),this.aleatoryNumber(3,10),this.aleatoryNumber(2,19),this.aleatoryWord(),"wallBreak");
+  this.generateWall(this.aleatoryNumber(1,3),this.aleatoryNumber(2,14),this.aleatoryNumber(2,19),this.aleatoryWord(),"wallBreak");
         i++;}
 };
 
 
 Game.prototype.drawBulletT1=function(bullet){
-    //Max widh || bullet vrange=10 While todo lo anterior
     console.log(bullet.range);
-    //$('.bullet1').removeClass('bullet1');Imprime solo una columna( no vale porque machacaría cualquier disparo)
-    while(bullet.range>0){
-      this.clearBullets(Bullet1player1Pos);//Imprime solo uno Y si lo quito imprime todos
+    var game = this;
+    function moveBullet() {
       var Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
-      //  var timerSet = setInterval(bullet.moveForward,500);
-        bullet.moveForward();
-      $(Bullet1player1Pos).addClass('bullet1');
-      bullet.range--;
-      //setTimeout(clearBullets(Bullet1player1Pos), 1000);
+      game.clearBullets(Bullet1player1Pos); //1/2 DO NOT CHANGE ORDER
 
-      //var timerSet= setInterval(this.clearBullets(Bullet1player1Pos), 1000);
-     }
+      bullet.moveForward();//2/2
+      Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
+      $(Bullet1player1Pos).addClass('bullet1');
+      }
+
+    //$('.bullet1').removeClass('bullet1');
+    //moveBullet();//Hace que salte una casilla el disparo
+    var interval = setInterval(function () {
+      if (bullet.range > 0) {
+        if (game.checkNextFwd(bullet.direction,bullet.position[0],"wall")){
+          console.log("obstacle AHEAD");
+          Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
+          game.soundPlayer("biggun1");
+          game.clearBullets(Bullet1player1Pos);
+          clearInterval(interval);
+        }
+          else if (game.checkNextFwd(bullet.direction,bullet.position[0],"wallBreak")) {
+            console.log("Break the DAMN Wall");
+            Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
+            game.killFwd(bullet.position[0],bullet.direction,"wallBreak");
+            game.soundPlayer("lightExplosion");
+            game.clearBullets(Bullet1player1Pos);
+            clearInterval(interval);
+          }
+          else if (game.checkNextFwd(bullet.direction,bullet.position[0],"player2")) {
+            console.log("DIE YOU RED DUMPSTER!");
+            Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
+            game.clearBullets(Bullet1player1Pos);
+            clearInterval(interval);
+          }
+        else{
+        moveBullet();
+        bullet.range--;}
+      } else {
+        Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
+        game.clearBullets(Bullet1player1Pos);
+        clearInterval(interval);
+      }
+    }, 100  );
+
 };
 
+
+Game.prototype.drawDotBlue=function(){
+    // var player1Pos = '[data-row=' + this.tank.position[0].row + '][data-col=' + this.tank.position[0].column + ']';
+    // $(player1Pos).addClass('dotBlue');
+    //   var timerSet= setInterval(this.clearBlueDot(player1Pos),10);
+};
 
 Game.prototype.drawBulletT2=function(){
   var Bullet1player2Pos = '[data-row=' + this.tank.position[1].row + '][data-col=' + this.tank.position[1].column + ']';
   $(Bullet1player2Pos).addClass('bullet1');
+
 };
+
 //////////////////////////////////////////////////////////////////
 ////////////////CLEARS///////////////////////
 /////////////////////////////////////////
@@ -149,14 +200,148 @@ $('.player2').removeClass('player2');
 
 Game.prototype.clearBullets=function(bullet){
   $(bullet).removeClass('bullet1');
+  //debugger;
 };
-Game.prototype.clearWalls=function(){
+Game.prototype.clearWall=function(position){
+  var RemoveWall = '[data-row=' + position.row+ '][data-col=' + position.column + ']';
+  $(RemoveWall).removeClass('wallBreak');
+};
+Game.prototype.clearBlueDot=function(){
+  $('.player1').removeClass('dotBlue');
+};
 
-};
 Game.prototype.clearItems=function(){
 
 };
+
+
+
 //////////////////////////////////////////////////////////////////
+////////////////Complementary FUNCTIONS///////////////////////
+
+Game.prototype.checkClass=function(objPos,classToLook){
+  this.objPos=objPos;
+  if($(objPos).hasClass(classToLook)){
+    return true;
+  }else{return false;}
+};
+
+Game.prototype.checkNextFwd=function(direction,position,classToLook){
+  var originPos = '[data-row=' + position.row + '][data-col=' + position.column + ']';
+  var rowOrigin=position.row;
+  var colOrigin=position.column;
+  switch (this.tank.direction) {
+    case "left":
+      colOrigin -=1;
+      var newposLeft = '[data-row="' + rowOrigin + '"][data-col="' + colOrigin + '"]';
+      if(this.checkClass(newposLeft,classToLook)){
+        return true;
+      }else{return false;}
+      break;
+    case "right":
+       colOrigin +=1;
+       var newposRight = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposRight,classToLook)){
+         return true;
+       }else{return false;}
+      break;
+    case "up":
+       rowOrigin -=1;
+       var newposUp = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposUp,classToLook)){
+         return true;
+       }else{return false;}
+      break;
+    case "down":
+       rowOrigin +=1;
+       var newposDown = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposDown,classToLook)){
+         return true;
+       }else{return false;}
+      break;
+  }
+};
+Game.prototype.checkNextBkw=function(direction,position,classToLook){
+  var originPos = '[data-row=' + position.row + '][data-col=' + position.column + ']';
+  var rowOrigin=position.row;
+  var colOrigin=position.column;
+  switch (this.tank.direction) {
+    case "left":
+      colOrigin +=1;
+      var newposLeft = '[data-row="' + rowOrigin + '"][data-col="' + colOrigin + '"]';
+      if(this.checkClass(newposLeft,classToLook)){
+        return true;
+      }else{return false;}
+      break;
+    case "right":
+       colOrigin -=1;
+       var newposRight = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposRight,classToLook)){
+         return true;
+       }else{return false;}
+      break;
+    case "up":
+       rowOrigin +=1;
+       var newposUp = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposUp,classToLook)){
+         return true;
+       }else{return false;}
+      break;
+    case "down":
+       rowOrigin -=1;
+       var newposDown = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposDown,classToLook)){
+         return true;
+       }else{return false;}
+      break;
+  }
+};
+Game.prototype.killThat=function(position,classToKill){
+  if(this.checkClass(position,classToKill)){
+    $(position).removeClass(classToKill);}
+    else{console.log ("ERROR KILLING the "+classToKill);}
+  };
+
+Game.prototype.killFwd=function(position,direction,classToLook){
+  //Recibe game.killFwd(bullet.position[0],bullet.direction,"wallBreak");
+  //var originPos = '[data-row=' + position.row + '][data-col=' + position.column + ']';
+  var rowOrigin=position.row;
+  var colOrigin=position.column;
+  switch (direction) {
+    case "left":
+      colOrigin -=1;
+      var newposLeft = '[data-row="' + rowOrigin + '"][data-col="' + colOrigin + '"]';
+      if(this.checkClass(newposLeft,classToLook)){
+          this.killThat(newposLeft,classToLook);
+      }else{break;}
+      break;
+    case "right":
+       colOrigin +=1;
+       var newposRight = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposRight,classToLook)){
+         this.killThat(newposRight,classToLook);
+     }else{break;}
+      break;
+    case "up":
+       rowOrigin -=1;
+       var newposUp = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposUp,classToLook)){
+         this.killThat(newposUp,classToLook);
+     }else{break;}
+      break;
+    case "down":
+       rowOrigin +=1;
+       var newposDown = '[data-row=' + rowOrigin + '][data-col=' + colOrigin + ']';
+       if(this.checkClass(newposDown,classToLook)){
+         this.killThat(newposDown,classToLook);
+     }else{break;}
+      break;
+  }
+};
+
+
+
+////////////////////////////////////////////////////////////////// wallBreak
 ////////////////CONTROLS///////////////////////
 ////////////////////////////////////////////////////
 Game.prototype.controlsTank1=function(){
@@ -166,58 +351,115 @@ Game.prototype.controlsTank1=function(){
       case 38: // arrow up
         switch (this.tank.direction) {
           case "left":
+          if (this.checkNextFwd(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }
+            else{
             this.clearTank1Global();
+            this.drawDotBlue();
             this.tank.moveForward(0);
             this.drawTank1();
             $('.player1').addClass('left');
 
+          }
             break;
           case "right":
+          if (this.checkNextFwd(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }
+            else{
             this.clearTank1Global();
+            this.drawDotBlue();
             this.tank.moveForward(0);
             this.drawTank1();
             $('.player1').addClass('right');
+          }
             break;
           case "up":
+          if (this.checkNextFwd(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }
+            else{
             this.clearTank1Global();
+            this.drawDotBlue();
             this.tank.moveForward(0);
             this.drawTank1();
             $('.player1').addClass('up');
+          }
             break;
           case "down":
+          if (this.checkNextFwd(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextFwd(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }
+            else{
             this.clearTank1Global();
+            this.drawDotBlue();
             this.tank.moveForward(0);
             this.drawTank1();
             $('.player1').addClass('down');
             break;
+          }
         }
         break;
       case 40: // arrow down
-        //this.tank.moveBack(0);
+        //this.tank.moveBack(0); checkNextBkw
         switch (this.tank.direction) {
           case "left":
+          if (this.checkNextBkw(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }
+            else{
             this.clearTank1Global();
             this.tank.moveBack(0);
             this.drawTank1();
             $('.player1').addClass('left');
+              }
             break;
           case "right":
+          if (this.checkNextBkw(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }else{
             this.clearTank1Global();
             this.tank.moveBack(0);
             this.drawTank1();
             $('.player1').addClass('right');
+          }
             break;
           case "up":
+          if (this.checkNextBkw(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }else{
             this.clearTank1Global();
             this.tank.moveBack(0);
             this.drawTank1();
             $('.player1').addClass('up');
+          }
             break;
           case "down":
+          if (this.checkNextBkw(this.tank.direction,this.tank.position[0],"wall")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"wallBreak")||
+          this.checkNextBkw(this.tank.direction,this.tank.position[0],"player2")) {
+            console.log("obstacle AHEAD");
+            }else{
             this.clearTank1Global();
             this.tank.moveBack(0);
             this.drawTank1();
             $('.player1').addClass('down');
+          }
             break;
         }
         break;
@@ -276,31 +518,32 @@ Game.prototype.controlsTank1=function(){
         }
         break;
       case 32: // spacebar
-          var audio = new Audio('./sounds/gunshot1.mp3');
-          audio.play();
+        // var audio = new Audio('./sounds/gunshot1.mp3');
+        // audio.play();
+          this.soundPlayer("shoot");
           switch (this.tank.direction) {
             case "left":
               var bulletLeft=this.tank.pressFire(this.tank.direction);
-              bulletLeft.position[0].column -=1;
+              bulletLeft.position[0].column +=1;
               this.drawBulletT1(bulletLeft);
 
               break;
             case "right":
               var bulletRight=this.tank.pressFire(this.tank.direction);
-              bulletRight.position[0].column +=1;
+              bulletRight.position[0].column -=1;
               //var timerSet= setInterval(this.drawBulletT1(bulletRight), 10000);
               this.drawBulletT1(bulletRight);
 
               break;
             case "up":
               var bulletUp=this.tank.pressFire(this.tank.direction);
-              bulletUp.position[0].row -=1;
+              bulletUp.position[0].row +=1;
               this.drawBulletT1(bulletUp);
               break;
             case "down":
 
               var bulletDown=this.tank.pressFire(this.tank.direction);
-              bulletDown.position[0].row +=1;
+              bulletDown.position[0].row -=1;
               this.drawBulletT1(bulletDown);
               break;
           }
@@ -348,6 +591,27 @@ Game.prototype.update=function(){
 Game.prototype.stop=function(){
 
 };////////
+
+//////////////////////////////////////////////////////////////////
+////////////////SOUND PLAYER SELECTOR///////////////////////
+/////////////////////////////////////////
+
+Game.prototype.soundPlayer=function(type){
+  switch (type) {
+    case "shoot":
+    var audio = new Audio('./sounds/gunshot1.mp3');
+    audio.play();
+      break;
+    case "lightExplosion":
+    var audio2 = new Audio('./sounds/explosion1.mp3');
+    audio2.play();
+    break;
+    case "biggun1":
+    var audio3 = new Audio('./sounds/biggun1.mp3');
+    audio3.play();
+  }//Swich
+};
+
 //////////////////////////////////////////////////////////////////
 ////////////////OBJECTS///////////////////////
 //////////////////////////////////////

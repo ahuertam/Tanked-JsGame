@@ -6,15 +6,15 @@ function Tank(){
   this.direction = "up";
   this.lifes=3;
   this.position=[
-    {row:0,column:1}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
-    {row:0,column:18}
+    {row:1,column:1}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
+    {row:1,column:18}
   ];
 
   }
-Tank.prototype.canAdvance=function(){//Comprueba si puede avanzar
+Tank.prototype.canAdvance=function(position){//Comprueba si puede avanzar
   return true;
 };
-Tank.prototype.canGoBack=function(){//Comprueba si puede avanzar
+Tank.prototype.canGoBack=function(position){//Comprueba si puede avanzar
   return true;
 };
 Tank.prototype.turnLeft=function(){
@@ -59,50 +59,63 @@ Tank.prototype.turnRight=function(){
 };
 Tank.prototype.moveForward=function(i){
   var initialPos=this.position[i];
-  if (this.canAdvance()){
     switch (this.direction) {
       case "up"://Move upper Row
+      if (this.canAdvance(this.position[i])){
         console.log("moveForward UP ");
           initialPos.row -=1;
+        }else{console.log("Cant move Forward");}
         break;
       case "down"://move down Row
+      if (this.canAdvance(this.position[i])){
         console.log("moveForward down ");
         initialPos.row +=1;
+        }else{console.log("Cant move Forward");}
         break;
       case "left":
+      if (this.canAdvance(this.position[i])){
         console.log("moveForward Left ");//move less column
         initialPos.column -=1;
+        }else{console.log("Cant move Forward");}
         break;
       case "right":
+      if (this.canAdvance(this.position[i])){
         console.log("moveForward Right ");//move right  column
         initialPos.column +=1;
+        }else{console.log("Cant move Forward");}
         break;
-    }
-  }else{console.log("Cant move Forward");}
+  }//swich
   console.log(initialPos.row+" "+initialPos.column);
 };
 Tank.prototype.moveBack=function(i){
   var initialPos=this.position[i];
-  if (this.canGoBack()){
     switch (this.direction) {
       case "up"://Move upper Row
+      if (this.canGoBack(this.position[i])){
         console.log("Going BackWards while facing up ");
           initialPos.row +=1;
+          }else{console.log("Cant move Forward");}
         break;
       case "down"://move down Row
+      if (this.canGoBack(this.position[i])){
         console.log("Going BackWards while facing down ");
         initialPos.row -=1;
+        }else{console.log("Cant move Forward");}
         break;
       case "left":
+      if (this.canGoBack(this.position[i])){
         console.log("Going BackWards while facing  Left ");//move less column
         initialPos.column +=1;
+        }else{console.log("Cant move Forward");}
         break;
       case "right":
+      if (this.canGoBack(this.position[i])){
         console.log("Going BackWards while facing   Right ");//move right  column
         initialPos.column -=1;
+        }else{console.log("Cant move Forward");}
         break;
-    }
-  }else{console.log("Cant move Forward");}
+    }//swich
+
   console.log(initialPos.row+" "+initialPos.column);
 
 };
@@ -120,8 +133,14 @@ Tank.prototype.pressFire=function(direction){
   bullet.moveForward();
   return(bullet);
 };
-Tank.prototype.collidesWith=function(){
+//return this.position[player].row === object.row && this.position[i].column === object.column;
 
+
+Tank.prototype.collidesWith=function(player,object){
+  return this.postion[player].some(function (element){
+    return element.row === object.row &&
+      element.column === object.column;
+    });
 };
 Tank.prototype.recieveShoot=function(){
 

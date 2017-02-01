@@ -47,6 +47,7 @@ Bullet.prototype.moveForward=function(){
         //var timerR=setInterval(function(){bulletPos.column +=1;} ,4000);
         break;
     }
+    //setTimeout((this.moveForward), 400);
     console.log(bulletPos);
   //DESTROY BULLET IF IT DID NOT COLLIDE
 };

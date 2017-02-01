@@ -143,25 +143,29 @@ transform:rotate(360deg);
   height: 40px;
 }
 .bullet1{
-  background-image:url("../img/Bullet7.gif");
+  background-image:url("../img/Bullet1Small.gif");
   width: 35px;
   height: 40px;
 
 }
 
-.wall{
-  background-image:url("../img/wall1.gif");
-  width: 35px;
-  height: 40px;
-}
-
-.bush{
-  background-image:url("../img/15.gif");
+.dotBlue{
+  background-image:url("../img/bluedot2.gif");
   width: 35px;
   height: 40px;
 }
 .wallBreak{
   background-image:url("../img/wall2.jpeg");
+  width: 35px;
+  height: 40px;
+}
+.bush{
+  background-image:url("../img/15.gif");
+  width: 35px;
+  height: 40px;
+}
+.wall{
+  background-image:url("../img/wall1.gif");
   width: 35px;
   height: 40px;
 }
