@@ -132,7 +132,16 @@ Tank.prototype.pressFire=function(direction){
   return(bullet);
 };
 //return this.position[player].row === object.row && this.position[i].column === object.column;
-
+Tank.prototype.pressFireT2=function(direction){
+  //Generate a new bullet with the direction of the tank
+  console.log("FIRING A BULLET direction: "+direction);
+  var tank2_position = JSON.parse(JSON.stringify(this.position));//THIS ELIMINATES THE OBJECT REFERENCE
+  console.log('this position',this.position);
+  var bullet2 =new Bullet(tank2_position,direction);
+  //setTimeout(function () {bullet.moveForward();},1000);
+  bullet2.moveForwardT2();
+  return(bullet2);
+};
 
 Tank.prototype.collidesWith=function(player,object){
   return this.postion[player].some(function (element){
