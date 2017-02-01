@@ -5,6 +5,7 @@ TANKS
 function Tank(){
   this.direction = "up";
   this.lifes=3;
+  this.points=0;
   this.position=[
     {row:1,column:1}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
     {row:1,column:18}
@@ -119,9 +120,6 @@ Tank.prototype.moveBack=function(i){
   console.log(initialPos.row+" "+initialPos.column);
 
 };
-Tank.prototype.stopTank=function(){//Stops the tank
-
-};
 
 Tank.prototype.pressFire=function(direction){
   //Generate a new bullet with the direction of the tank
@@ -143,8 +141,19 @@ Tank.prototype.collidesWith=function(player,object){
     });
 };
 Tank.prototype.recieveShoot=function(){
-
+  this.lifes-=1;
+  if (this.lifes>0){
+    console.log("LIFES LEFT: "+this.lifes);
+    return false; //aun no muere
+  }
+  else{console.log("YOU HAVE LOST");
+    return true;}
 };
+Tank.prototype.getSomePoints=function(number){
+  this.points+=number;
+  console.log(number+" Points Scored! You have: "+this.points);
+};
+
 Tank.prototype.getsPowerUp=function(){
 
 };

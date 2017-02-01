@@ -3,6 +3,7 @@
 
 function Game(obj){
   this.tank= obj.tank;
+  this.tank2= obj.tank2;
   this.rows = obj.rows;
   this.columns = obj.columns;
   function gridBackground(){
@@ -32,6 +33,10 @@ function Game(obj){
 //////////////////////////////////////////////////////////////////
 ////////////////DRAWING///////////////////////
 ////////////////////////////////////////
+Game.prototype.paintLives=function(tank){
+
+
+};
 Game.prototype.drawTank1=function(){
     var player1Pos = '[data-row=' + this.tank.position[0].row + '][data-col=' + this.tank.position[0].column + ']';
     $(player1Pos).addClass('player1');
@@ -125,6 +130,7 @@ Game.prototype.drawBulletT1=function(bullet){
     //moveBullet();//Hace que salte una casilla el disparo
     var interval = setInterval(function () {
       if (bullet.range > 0) {
+////////////////IMPACT  WALL////////////////////////
         if (game.checkNextFwd(bullet.direction,bullet.position[0],"wall")){
           console.log("obstacle AHEAD");
           Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
@@ -132,19 +138,33 @@ Game.prototype.drawBulletT1=function(bullet){
           game.clearBullets(Bullet1player1Pos);
           clearInterval(interval);
         }
+////////////////IMPACT Breakble WALL////////////////////////
           else if (game.checkNextFwd(bullet.direction,bullet.position[0],"wallBreak")) {
             console.log("Break the DAMN Wall");
             Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
             game.killFwd(bullet.position[0],bullet.direction,"wallBreak");
             game.soundPlayer("lightExplosion");
             game.clearBullets(Bullet1player1Pos);
+            game.tank.getSomePoints(100);
             clearInterval(interval);
           }
+////////////////IMPACTA CONTRA JUGADOR 2////////////////////////
           else if (game.checkNextFwd(bullet.direction,bullet.position[0],"player2")) {
             console.log("DIE YOU RED DUMPSTER!");
             Bullet1player1Pos = '[data-row=' + bullet.position[0].row+ '][data-col=' + bullet.position[0].column + ']';
+            //LLAMAR A FUNCION QUE RESTA VIDA, EN CASO QUE NO TENGA VIDAS ACABA LA PARTIDA
+            //If result = True inicia muerte // Else Continua
             game.clearBullets(Bullet1player1Pos);
-            clearInterval(interval);
+            if(game.tank2.recieveShoot()){////////END GAME HERE
+              game.tank.getSomePoints(1500);
+              game.soundPlayer("bigExplosion");
+              game.killFwd(bullet.position[0],bullet.direction,"player2");
+              alert("BLUE PLAYER 1 WINS!! LONG LIVE THE BLUE`S" + "LIFES LEFT :"+game.tank.lifes+" That gives Some points too man!, in total you have got :"+game.tank.points);
+              clearInterval(interval);
+            }else{
+              game.soundPlayer("lightExplosion");
+              game.tank.getSomePoints(500);
+              clearInterval(interval);}
           }
         else{
         moveBullet();
@@ -583,10 +603,10 @@ Game.prototype.start=function(){
 };
 Game.prototype.update=function(){
   //this.clearTank1();
-  this.clearTank2();
+  //this.clearTank2();
   //console.log("Drawing it again");
 //
-  this.drawTank2();
+  //this.drawTank2();
 };
 Game.prototype.stop=function(){
 
@@ -609,6 +629,11 @@ Game.prototype.soundPlayer=function(type){
     case "biggun1":
     var audio3 = new Audio('./sounds/biggun1.mp3');
     audio3.play();
+    break;
+    case "bigExplosion":
+    var audio4 = new Audio('./sounds/explosion.mp3');
+    audio4.play();
+    break;
   }//Swich
 };
 
