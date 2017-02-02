@@ -6,9 +6,9 @@ function Tank(){
   this.direction = "up";
   this.lifes=3;
   this.points=0;
-  this.position=[
-    {row:1,column:1}, // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION ( EX WE WANT TO STORE A RESPAWN POSITION)
-    {row:1,column:18}
+  this.position=[ // ITS AN ARRAY OF OBJECTS SO WE CAN STORE MORE THAN ONE POSITION
+    {row:1,column:1},//TANK1
+    {row:1,column:18}//TANK2
   ];
 
   }

@@ -17,25 +17,22 @@ h1{
 }
 .btn{
   background-color: black;
-  color:white;
   font-family: 'Press Start 2P', cursive;
   border:1px solid black;
   padding: 1%;
   margin-top: 1%;
   margin-left: 2%;
+  text-decoration: none;
+  color:red;
 }
 .btn a{
-  text-decoration:none;
+  text-decoration: none;
+  color:red;
 }
-.btn:hover{
-  color:black;
-  background-image:url("../img/bgtile.gif");
-  background-repeat:round;
-  font-family: 'Press Start 2P', cursive;
-  border:1px solid black;
-  padding: 1%;
-  margin-top: 1%;
-  margin-left: 2%;
+.btn a:hover{
+  text-decoration: none;
+  color:blue;
+
 }
 
 .playerLeft{
@@ -91,7 +88,7 @@ h1{
 
 }
 .board{
-height: 450px;
+height: 550px;
 width: 700px;
 margin: 30px auto;
 background-color: black;
@@ -142,6 +139,11 @@ transform:rotate(360deg);
   width: 35px;
   height: 40px;
 }
+.iaTank{
+  background-image:url("../img/TankBadSmall.gif");
+  width: 35px;
+  height: 40px;
+}
 .bullet1{
   background-image:url("../img/Bullet1Small.gif");
   width: 35px;
@@ -174,3 +176,23 @@ transform:rotate(360deg);
   width: 35px;
   height: 40px;
 }
+
+.player1Wins{
+  /*background-color: red;*/
+  position: absolute;
+  height: 550px;
+  width: 700px;
+  margin-top:-37%;
+}
+/*.sky{
+  position: absolute;
+  height: 550px;
+  width: 700px;
+  margin-top:-37%;
+}
+.cloud{
+   display: inline-block;
+  background-image:url("../img/cloud.gif");
+  width: 35px;
+  height: 40px;
+}*/
