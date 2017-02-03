@@ -18,7 +18,6 @@ Basic Features:
  * Interactive Elements
  * Retro Style
 
-file with explanations of the technologies used, the approach taken, installation instructions, unsolved problems, etc.
 
 ### Technologies used to make this:
 Html5, CSS3 , javascript , Jquery.
