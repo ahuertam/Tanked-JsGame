@@ -2,7 +2,7 @@ body{
   font-family: 'Press Start 2P', cursive;
   background-image:url("../img/bgtile.gif");
   background-color:#696969;
-
+  margin-top: 0%;
   color: blue;
 }
 h1{
@@ -20,8 +20,8 @@ h1{
   font-family: 'Press Start 2P', cursive;
   border:1px solid black;
   padding: 1%;
-  margin-top: 1%;
-  margin-left: 2%;
+  margin-top: -3%;
+  margin-left: 44%;
   text-decoration: none;
   color:red;
 }
@@ -36,43 +36,45 @@ h1{
 }
 
 .playerLeft{
-  /*border:1px solid black;*/
+  border-radius: 10%;
   color:blue;
   position: absolute;
   float:left;
   background-color: black;
   font-size: 14px;
+  margin-left: 4%;
   margin-top: 1%;
   padding-left: 1%;
-  padding-right: 2%
-
+  padding-right: 2%;
 
 }
+
+
 #tLeft {
-  margin-left: -72%;
-  margin-top: -14%;
+  margin-left: 13%;
+  margin-top: -22.5%;
   transform: rotate(90deg);
   float: left;
   position: absolute;
 }
 #tRight {
-  margin-top: -14%;
-  margin-left: 2%;
-  margin-left: 9%;
+  margin-top: -22%;
+  margin-left: 80%;
   transform: rotate(-90deg);
   float: left;
   position: absolute;
 }
 
 .playerRight{
-  /*border:1px solid black; */
+  border-radius: 10%;
   font-size: 14px;
   color: red;
   position: absolute;
   float: left;
   padding-bottom: 0.5%;
-  padding-right: 11.5%;
-  margin-top:-36.5%;
+  padding-right: 6.5%;
+  padding-left: 1.5%;
+  margin-top:-44.5%;
   margin-left: 77.5%;
   background-color: black;
 }
@@ -177,13 +179,27 @@ transform:rotate(360deg);
   height: 40px;
 }
 
-.player1Wins{
+.playerWins{
   /*background-color: red;*/
   position: absolute;
   height: 550px;
   width: 700px;
   margin-top:-37%;
 }
+.show1{
+  background-image:url("../img/goodbyRed.png");
+
+}
+.show2{
+  background-image:url("../img/goodbyBLue.png");
+
+}
+.water{
+  border:1px solid black;
+  border-radius: 30%;
+  background-image:url("../img/water3.gif");
+  width: 35px;
+  height: 40px;
 /*.sky{
   position: absolute;
   height: 550px;
