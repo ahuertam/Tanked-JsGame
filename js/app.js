@@ -1,5 +1,4 @@
 /////////////////////////////////////////CONSTRUCTORS
-
 function Game(obj){
   this.tank= obj.tank;
   this.tank2= obj.tank2;
