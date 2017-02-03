@@ -2,7 +2,7 @@
 # <strong>TANKED!
 
 <p>Pages to the functioning proyect: <a>https://ahuertam.github.io/IHProyect1/index.html</a> </p>
-<p>Presentation: <a>https://slides.com/ahuertam/deck-1/live#/</a> </p>
+<p>Presentation: <a>http://slides.com/ahuertam/deck-1#/</a> </p>
 
 <p>The project is called Tanked! . Its a 2 player game on a fixed layout
 where both players are a tank that can move up,dow,left and right and shoot bullets from their cannons.</p>
